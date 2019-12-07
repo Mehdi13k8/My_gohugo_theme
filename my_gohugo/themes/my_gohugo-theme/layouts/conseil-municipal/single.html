@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<title> {{ .Title }} </title>
+{{  partial "header.html" . }}
+{{ $ctx := . }}
+
+<div class="container">
+  <h3>Municipal Council: {{ .Title }}</h3>
+  <br>
+  <br>
+  <div class="col s6">
+    {{ if not (eq .Params.FirstNames "")}}
+    <span class="card-content"> FirstName: {{ .Params.FirstNames }} <br /> </span>
+    {{ end }}
+
+    {{ if not (eq .Params.LastName "")}}
+    <span class="card-content"> LastName: {{ upper .Params.LastName }} <br /> </span>
+    {{ end }}
+
+    {{ if not (eq .Params.Role "")}}
+    <span class="card-content"> Role: {{ .Params.Role }} <br /> </span>
+    {{ end }}
+  </div>
+
+  <div class="col s6">
+    {{ if not (eq .Params.Photo "")}}
+    <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.Params.Photo}}" width="300" height="190" alt="">
+    {{ end }}
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{{  partial "footer.html" . }}
+</html>

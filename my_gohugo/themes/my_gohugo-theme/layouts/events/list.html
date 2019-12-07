@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+{{  partial "header.html" . }}
+<style>
+  .cards-container {
+    -webkit-column-break-inside: avoid;
+  }
+
+  .cards-container .card {
+    transform: translateZ(0);
+    display: inline-block;
+    overflow: visible;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .cards-container {
+      -webkit-column-count: 1;
+      -moz-column-count: 1;
+      column-count: 1;
+    }
+  }
+
+  @media only screen and (min-width: 601px) {
+    .cards-container {
+      -webkit-column-count: 2;
+      -moz-column-count: 2;
+      column-count: 2;
+    }
+  }
+
+  @media only screen and (min-width: 993px) {
+    .cards-container {
+      -webkit-column-count: 3;
+      -moz-column-count: 3;
+      column-count: 3;
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+</style>
+<br>
+<h3 class="center-align">All my events:</h3>
+<div class="row" id="rowevent">
+  <div class="col s12">
+    <div class="carousel" id="carouselevent">
+      {{ range where (.Data.Pages.ByParam "When").Reverse "Section" "events"  }}
+      <!-- Responsive Cards for each  -->
+      <div class="carousel-item">
+        <div class="card">
+          <div class="card-image">
+            {{ $ctx := . }}
+            {{ range first 1 .Params.Photos }}
+            {{ if (not (eq . "")) }}
+            <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">
+            {{ else }}
+            <img class="activator"
+              src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb"
+              width="300" height="190" alt="">
+            {{ end }}
+            {{ end }}
+            <span class="card-title">
+              {{ if eq .Params.draft false }}
+              <h5><a style="opacity: 0.8;" class="black" href="{{.Permalink}}">{{ .Title }} </a></h5>
+              {{ else }}
+              <h5 style="opacity: 0.8;" class="black">{{ .Title }}</h5>
+              {{ end }}
+            </span>
+          </div>
+          <span class="card-content">
+            <p class="truncate">
+              {{ if not (eq .Params.label "") }}
+              label: {{ .Params.label }}
+              {{ end }}
+              {{ if not (eq .Params.when "")}}
+              when: {{ .Params.when }}
+              {{ end }}</p>
+          </span>
+          <div class="card-action">
+            <a href="{{.Permalink}}">Accès</a>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <a id="toggle" class="waves-effect waves-light btn center">Toggle "Column-Count"</a>
+    </div>
+  </div>
+  <div class="row">
+    <div id="toggle-container" class="col s12 cards-container">
+
+    </div>
+  </div>
+</div>
+<div class="row" id="rowpastevent">
+  <div class="col s12">
+    <div class="carousel-past" id="caroupast">
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<script>
+  $(document).ready(function () {
+    //{ { if lt (sub (now.Unix) (.Date.Unix)) 10000 }}<span class="badge badge-secondary">New</span>
+    console.log("gg");
+    $("#toggle").click(function () {
+      var container = $("#toggle-container");
+      if (container.hasClass("cards-container")) {
+        container.removeClass("cards-container");
+        container.addClass("s6");
+        container.removeClass("s12");
+      } else {
+        container.addClass("cards-container");
+        container.removeClass("s6");
+        container.addClass("s12");
+      }
+    });
+    var hash = window.location.href.substring(window.location.href.indexOf("#") + 1);
+    $('#toggle').hide();
+    if (hash == "upcoming") {
+      console.log("upcoc");
+      $('#rowevent').remove();
+      $('#toggle-container').append('{{ range  first 10 (where (where .Pages "Section" "events") ".Date" "gt" now) }}<div class="card"><div class="card-image waves-effect waves-block waves-light">{{ $ctx := . }}{{ range first 1 .Params.Photos }}{{ if (not (eq . "")) }}<img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">{{ else }}<img class="activator" src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb" width="300" height="190" alt="">{{ end }}{{ end }}</div><div class="card-content"><span class="card-title activator grey-text text-darken-4">{{ .Title }}<i class="material-icons mdi-navigation-more-vert right"></i></span><p><a href="#">This is a link</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">{{ .Title }}<i class="material-icons right mdi-navigation-close"></i></span><p class="truncate">{{ .Content  | safeHTML | truncate 10}} </p></div></div>{{ end }}');
+      $('#toggle').show();
+    }
+    if (hash == "past") {
+      $('#rowevent').remove();
+      //$('#toggle-container').append('');
+      $('#toggle-container').append('{{ range  first 10 (where (where .Pages "Section" "events") ".Date" "lt" now) }}<div class="carousel-item">' +
+        '<div class="card"><div class="card-image">{{ $ctx := . }}{{ range first 1 .Params.Photos }}{{ if (not (eq . "")) }}' +
+        '<img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">{{ else }}' +
+        '<img class="activator" src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb" width="300" height="190" alt="">' +
+        '{{ end }}{{ end }}<span class="card-title">' +
+        '<h5 style="opacity: 0.8;" class="black">{{ .Title }}</h5></span></div><span class="card-content">' +
+        '<div class="col s4"><p class="truncate">{{ .Content  | safeHTML | truncate 10}} </p></div></span><div class="card-action">' +
+        '<a href="{{.Permalink}}">Accès</a></div>' +
+        '</div></div>{{ end }}');
+      /*$('#caroupast').append('{{ range  first 10 (where (where .Pages "Section" "events") ".Date" "lt" now) }}'+
+        '<div class="carousel-item">'+
+          '<div class="card">'+
+            '<div class="card-image">'+
+             ' {{ $ctx := . }}'+
+             ' {{ range first 1 .Params.Photos }}'+
+              '{{ if (not (eq . "")) }}'+
+                    '<img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">'+
+                    '{{ else }}'+
+                    '<img class="activator" src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb" width="300" height="190" alt="">'+
+                    '{{ end }}'+
+              '{{ end }}'+
+                '<span class="card-title">'+
+              '<h5 style="opacity: 0.8;" class="black">{{ .Title }}</h5>'+
+            '</span>'+
+            '</div>'+
+               '<span class="card-content">'+
+              '<div class="col s4">'+
+                  '<p class="truncate">{{ .Content  | safeHTML | truncate 10}} </p>'+
+              '</div>'+
+            '</span>'+
+            '<div class="card-action">'+
+              '<a href="{{.Permalink}}">Accès</a>'+
+            '</div>'+
+          '</div>'+
+      '</div>'+
+    '{{ end }}');*/
+      //$('#caroupast').carousel();
+      $('#toggle').show();
+    }
+    $('#carouselevent').carousel();
+  });
+</script>
+{{  partial "footer.html" . }}
+
+</html>

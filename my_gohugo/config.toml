@@ -1,0 +1,11 @@
+baseURL = "https://localhost:1313/"
+languageCode = "en-us"
+title = "My New Hugo Site"
+theme = "my_gohugo-theme"
+themesdir = "./themes"
+
+[outputs]
+    home = ["HTML", "JSON"]
+    
+[taxonomies]
+    archive = "archive"

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+{{  partial "header.html" . }}
+<br>
+<h3>My Futur Events: (10 first...)</h3>
+<br>
+<div class="row">
+  <div class="col s12">
+    <div class="carousel" id="maincarousel">
+      {{ $ctx := . }}
+      {{ range  first 10 (where (where (where .Pages "Section" "events") ".Params.important" "eq" true) ".Date" "gt" now) }}
+      <!-- Responsive Cards for each  -->
+      <div class="carousel-item" style="width: auto;height: auto;">
+        <div class="card">
+          <div class="card-image">
+            {{ range first 1 .Params.Photos }}
+            {{ if (not (eq . "")) }}
+            <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">
+            {{ else }}
+            {{.}}
+            <img src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb">
+            {{ end }}
+            {{ end }}
+            <span class="card-title">
+              {{ if eq .Params.draft true }}
+              <h5 style="opacity: 0.8;" class="black">{{ .Title }}</h5>
+              {{ else }}
+              <h5> <a style="opacity: 0.8;" class="black" href="{{.Permalink}}">{{ .Title }} </a></h5>
+              {{ end }}
+            </span>
+          </div>
+          <span class="card-content">
+            <p class="truncate">
+              {{ if not (eq .Params.label "") }}
+              label: {{ .Params.label }}
+              {{ end }}
+              {{ if not (eq .Params.when "")}}
+              when: {{ .Params.when }}
+              {{ end }}
+              {{ .Content }} </p>
+          </span>
+          <div class="card-action">
+            <a href="{{.Permalink}}">Accès</a>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+{{  partial "footer.html" . }}
+
+</html>

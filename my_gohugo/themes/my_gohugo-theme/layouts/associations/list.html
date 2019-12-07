@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  {{  partial "header.html" . }}
+
+  <h3>Associations</h3>
+  <br>
+    <div class="row">
+    <div class="col s12">
+    <div class="carousel" id="maincarousel">
+    {{ $ctx := . }}
+    {{ range  .Data.Pages}}
+    {{ if eq .Section "associations"}}
+  <!-- Responsive Cards for each  -->
+      <div class="carousel-item">
+        <div class="card">
+          <div class="card-image">
+
+            {{ if eq .Params.Photo "" }}
+            <img src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb">
+            {{ else }}
+            <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.Params.Photo}}" width="300" height="190" alt="">
+            {{end}}
+              <span class="card-title">
+        <h5> <a style="opacity: 0.8;" class="black" href="{{.Permalink}}" >{{ .Title }} </a></h5>
+          </span>
+          </div>
+          <div> <span style="font-size: 10px;" class="card-content"> {{ .Params.Domain }}</span></div>
+
+          <div class="card-action">
+            <a href="{{.Permalink}}">Accès</a>
+          </div>
+        </div>
+    </div>
+
+    {{ end }}  
+  {{ end }}
+  </div>
+  </div>
+  </div>
+  
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  
+  <br>
+  {{  partial "footer.html" . }}
+</html> 

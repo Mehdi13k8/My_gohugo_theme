@@ -1,0 +1,49 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  --><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="{{ .Site.BaseURL}}/css/styling.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <base href="{{ .Site.BaseURL }}">
+</head>
+<body>
+
+<div class="content1">
+<div id="mySidenav" class="mysidenav" style="z-index: 999;">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <label for="site-search">Search the site:</label>
+  <input type="search" id="site-search" name="q"
+         aria-label="Search through site content" class="grey-text text-lighten-2">
+  <button id="btnsearch">Search</button>
+  <div id="searchdiv" class="grey-text text-lighten-2">
+    <h3> Search Result :</h3>
+    <hr>
+   </div>
+  <div id="assocspot" class="grey-text text-lighten-2" > 
+    <h3> Spotlight : </h3>
+    <hr>
+    {{ range  first 10 (where (where .Pages "Section" "associations") ".Params.important" "=" true) }}
+            <h3><a href="{{.Permalink}}">{{.Title}}</a></h3>
+    {{ end }}    
+  </div>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+<ul style="z-index: 998;">
+  <li><a href="{{ .Site.BaseURL}}index.html" class="dropbtn">Home</a></li>
+  <li><a href="{{ .Site.BaseURL}}/conseil-municipal/" class="dropbtn">Municipal Council</a></li>
+  <li><a href="{{ .Site.BaseURL}}/associations/" class="dropbtn">Associations</a></li>
+
+  <li class="mydropdown">
+    <a href="javascript:void(0)">Events</a>
+    <div class="mydropdown-content">
+      <a href="{{ .Site.BaseURL}}/events/">All Events</a>
+      <a href="{{ .Site.BaseURL}}/events/#upcoming">Upcoming Events</a>
+      <a href="{{ .Site.BaseURL}}/events/#past">Archived Events</a>
+      <a href="{{ .Site.BaseURL}}/calendar/">Calendar</a>
+    </div>
+  </li>
+</ul>
+</div>

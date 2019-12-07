@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<title> {{ .Title }} </title>
+{{  partial "header.html" . }}
+{{ $ctx := . }}
+
+<div class="container">
+  <h3>Association: {{ .Title }}</h3>
+  <div class="row">
+    <div class="col s4">
+    </div>
+    <div class="col s5">
+      {{ if not (eq .Params.Domain "")}}
+      <span class="card-content"> Domain: {{ .Params.Domain }} <br /> </span>
+      {{else}}
+      <br>
+      <br>
+      <br>
+      <br>
+      {{ end }}
+
+      {{ if not (eq .Params.Address "")}}
+      <span class="card-content"> Address: {{ .Params.Address }} <br /> </span>
+      {{else}}
+      <br>
+      <br>
+      <br>
+      <br>
+      {{ end }}
+
+      {{ if not (eq .Params.Description "")}}
+      <span class="card-content"> Description: {{ .Params.Description }} <br /> </span>
+      {{ else }}
+      <br>
+      <br>
+      <br>
+      <br>
+      {{ end }}
+    </div>
+    <div>
+      {{ if not (eq .Params.Photo "")}}
+      <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.Params.Photo}}" width="300" height="190" alt="">
+      {{ else }}
+      <br>
+      <br>
+      <br>
+      <br>
+      {{ end }}
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <button id="toggle_events" class="waves-effect waves-light btn center">Showing Upcoming Events</a>
+    </div>
+  </div>
+  <div class="row">
+    <div id="toggle-container_upcoming" class="col s12 cards-container">
+    </div>
+    <div class="row">
+      <div id="toggle-container_past" class="col s12 cards-container">
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{{ $ctx := . }}
+{{ $mytitle := .Title }}
+<script>
+  $('#toggle-container_upcoming').append('{{ range (where (where .Site.Pages "Section" "events") ".Date" "gt" now) }}{{ if eq .Params.Association $mytitle }}' +
+    '<div class="card"><div class="card-image waves-effect waves-block waves-light">' +
+    '{{ range first 1 .Params.Photos }}{{ if (not (eq . "")) }}<img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">{{ else }}<img class="activator" src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb" width="300" height="190" alt="">{{ end }}{{ end }}' +
+    '</div><div class="card-content"><span class="card-title activator grey-text text-darken-4">{{ .Title }}<i class="material-icons mdi-navigation-more-vert right"></i></span><p><a href="{{ .Permalink}}">Access to this event link</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">{{ .Title }}<i class="material-icons right mdi-navigation-close"></i></span><p class="truncate">{{ .Content  | safeHTML | truncate 10}} </p></div></div>{{ end }}{{ end }}');
+
+  $('#toggle-container_past').append('{{ range (where (where .Site.Pages "Section" "events") ".Date" "lt" now) }}{{ if eq .Params.Association $mytitle }}' +
+    '<div class="card"><div class="card-image waves-effect waves-block waves-light">' +
+    '{{ range first 1 .Params.Photos }}{{ if (not (eq . "")) }}<img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="190" alt="">{{ else }}<img class="activator" src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb" width="300" height="190" alt="">{{ end }}{{ end }}' +
+    '</div><div class="card-content"><span class="card-title activator grey-text text-darken-4">{{ .Title }}<i class="material-icons mdi-navigation-more-vert right"></i></span><p><a href="{{ .Permalink}}">Access to this event link</a></p></div><div class="card-reveal"><span class="card-title grey-text text-darken-4">{{ .Title }}<i class="material-icons right mdi-navigation-close"></i></span><p class="truncate">{{ .Content  | safeHTML | truncate 10}} </p></div></div>{{ end }}{{ end }}');
+  $('#toggle-container_past').hide();
+
+  var clicked = false;
+  $('#toggle_events').click(function () {
+    if (clicked == false) {
+      $('#toggle_events').attr("class", "waves-effect waves-light btn center red");
+      $('#toggle_events').text("Showing Past Events");
+      $('#toggle-container_past').show();
+      $('#toggle-container_upcoming').hide();
+      clicked = true
+    } else {
+      $('#toggle_events').attr("class", "waves-effect waves-light btn center");
+      $('#toggle_events').text("Showing Upcoming Events");
+      $('#toggle-container_upcoming').show();
+      $('#toggle-container_past').hide();
+      clicked = false
+    }
+  });
+</script>
+{{  partial "footer.html" . }}
+</html>

@@ -1,0 +1,53 @@
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+  $(document).ready(function(){
+    $('#maincarousel').carousel({
+    indicators: false
+    });
+    $('.indicators').css("background-color", "transparent"); 
+    $('.indicators').css("z-index", "-1"); 
+    $('#btnsearch').click(function() {
+        $('#searchdiv').empty();
+        $('#searchdiv').append('<h3> Search Result :</h3>');
+        '{{ range .Site.Pages }}';
+        if ('{{.Title}}'.search($('#site-search').val()) != -1) {
+            $('#searchdiv').append('<li><a href="{{.Permalink}}">{{.Title}}</a></li>');
+        }
+        '{{ end }}';
+    });
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</body>
+
+<footer class="footer" style="position:sticky;bottom: 0;height: 300px;background-image: linear-gradient(to right, rgba(0,0,255,0.5), rgba(0,0,255,1), rgba(0,0,255,0.5));z-index: 10">
+<br>
+<div class="row">
+    <div class="col s8">
+        <div class="container">
+            <form action="https://getform.io/f/aba5e519-de70-43d6-8142-f55263f9403a" method="POST" enctype="multipart/form-data">
+                <input type="text" name="email" placeholder="Your Mail *" required="required">
+                <input type="text" name="name" placeholder="Subject *" required="required">
+                <input type="text" name="message" placeholder="Your Message *" required="required">
+                <input type="file" name="file" placeholder="Your Message">
+                <button type="submit">Send</button>
+              </form>
+              <br>
+              <a class="right" href="tel:+33635591188" style="color: white;">Phone number : <i>06.35.59.11.88</i></a>
+              </div>
+    </div>
+    <div class="col s4" style="width: 1px;border-left: outset;height: 100%;">
+    <iframe width="350" height="220" src="https://maps.google.com/maps?width=350&amp;height=220&amp;hl=en&amp;q=Quai%20du%20Port%2C%2013002%20Marseille+(Marie%20de%20Marseille)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+    </div>
+</div>
+<div class="container">
+        <a href="#" class="red-text text-lighten-4">Footer</a><i class="blue-text text-lighten-3">, by </i><a href="#">Mehdi</a>
+    </div>
+</footer>

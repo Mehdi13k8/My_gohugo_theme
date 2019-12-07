@@ -1,0 +1,7 @@
+{{ $ctx := .}}
+{{ range .Site.Pages}}
+{{ if eq .Params.Name "mehdi rhoulam"}}
+<h2 class="center-align"> {{ .Content }}</h2>
+<img class="center-align" src="{{ $ctx.Site.BaseURL }}/{{.Params.Photo}}">
+{{ end }}
+{{ end }}

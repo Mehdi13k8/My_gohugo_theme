@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://localhost:1313/conseil-municipal/the-new_kakatoes/</loc>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/associations/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/conseil-municipal/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://localhost:1313/associations/the-new_kakatoes/</loc>
+  </url>
+  
+</urlset>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+{{  partial "header.html" . }}
+<h3 class="center-align"> Presentation of the event:</h3>
+<div class="container">
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      {{ $ctx := . }}
+      {{ range first 1 .Params.Photos }}
+      {{ if (not (eq . "")) }}
+      <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="250" height="350" alt="">
+      {{ else }}
+      <img class="activator"
+        src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb"
+        width="250" height="350" alt="">
+      {{ end }}
+      {{ end }}
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{ .Title }}<i
+          class="material-icons right">more_vert</i></span>
+      <p><a href="#"></a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.Address }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.PostalCode }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.City }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.Label }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.When }}</span>
+      <span class="card-title activator grey-text text-darken-4">{{ .Params.Description }}</span>
+      <p>{{ .Content }}</p>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+  <div class="row">
+    {{ $ctx := . }}
+    {{ range .Params.Photos }}
+    {{ if (not (eq . "")) }}
+    <img class="activator" src="{{ $ctx.Site.BaseURL }}/{{.}}" width="300" height="290" alt="">
+    {{ end }}
+    {{ end }}
+  </div>
+</div>
+
+{{  partial "footer.html" . }}
+
+</html>

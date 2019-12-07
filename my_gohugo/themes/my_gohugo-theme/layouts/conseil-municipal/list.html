@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+{{  partial "header.html" . }}
+
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col s12">
+      <h3 class="center-align">Municipal Council</h3>
+      <div class="carousel" id="maincarousel">
+        {{ $ctx := . }}
+        {{ range  .Data.Pages}}
+        {{ if eq .Section "conseil-municipal"}}
+        <!-- Responsive Cards for each  -->
+        <div class="carousel-item">
+          <div class="card">
+            <div class="card-image">
+
+              {{ if not (eq .Params.Photo "") }}
+              <img src="{{ $ctx.Site.BaseURL }}/{{.Params.Photo}}" width="300" height="190" alt="">
+              {{ else }}
+              <img
+                src="https://images.pexels.com/photos/573299/pexels-photo-573299.jpeg?h=350&auto=compress&cs=tinysrgb">
+              {{ end }}
+              <span class="card-title">
+
+                <h5> <a style="opacity: 0.8;" class="black" href="{{.Permalink}}">{{ .Title }} </a></h5>
+              </span>
+            </div>
+            <div><span style="font-size: 10px;" class="card-content"> {{ .Params.FirstNames }}
+                {{ upper .Params.LastName }}</span></div>
+            <div> <span style="font-size: 10px;" class="card-content"> {{ .Params.Role }}</span></div>
+
+            <div class="card-action">
+              <a href="{{.Permalink}}">Accès</a>
+            </div>
+          </div>
+        </div>
+
+        {{ end }}
+        {{ end }}
+      </div>
+      {{  partial "presentation.html" . }}
+    </div>
+  </div>
+</div>
+
+{{  partial "footer.html" . }}
+
+</html>
